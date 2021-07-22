@@ -5,23 +5,18 @@ import AddItem from "./AddItem";
 import Item from "./Item";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import useToDoList from "../src/hooks/useToDoList";
+import httpService from "./HttpService";
 
 function App() {
-  const [todo, setTodo] = useState([
-    { id: 1, description: "nauczyc sie reacta", check: false },
-    { id: 2, description: "skończyć upskilla", check: false },
-    { id: 3, description: "umyc okna", check: false },
-    { id: 4, description: "zjesc ciasto", check: false },
-    { id: 5, description: "wypić aperolka", check: false },
-  ]);
+  const [todo, setTodo] = useToDoList();
 
   const [plusButton, setPlusButton] = useState(false);
 
-  const addTodo = (description) => {
-    setTodo([
-      ...todo,
-      { id: todo.length + 1, description: description, check: false },
-    ]);
+  const addTodo = (newToDo) => {
+    httpService
+      .post("todo", newToDo)
+      .then((res) => setTodo([...todo, res.data]));
   };
 
   const expandAdditionalSection = () => {
@@ -29,7 +24,9 @@ function App() {
   };
 
   const removeTodo = (id) => {
-    setTodo(todo.filter((todo) => todo.id !== id));
+    httpService
+      .delete(`todo/${id}`)
+      .then(setTodo(todo.filter((todo) => todo.id !== id)));
   };
 
   const completed = (id) => {
@@ -43,14 +40,16 @@ function App() {
     setTodo(itemToDo);
   };
 
-  const editTodo = (id, description) => {
-    setTodo(
-      todo.map((todo) => {
-        if (todo.id === id) {
-          todo.description = description;
-        }
-        return todo;
-      })
+  const editTodo = (newToDo) => {
+    httpService.put(`todo/${newToDo.id}`, newToDo).then(
+      setTodo(
+        todo.map((todo) => {
+          if (todo.id === newToDo.id) {
+            todo.description = newToDo.description;
+          }
+          return todo;
+        })
+      )
     );
   };
 
@@ -84,6 +83,7 @@ function App() {
               <AddItem
                 addTodo={addTodo}
                 setPlusButton={setPlusButton}
+                todo={todo}
               ></AddItem>
             ) : (
               <div>
