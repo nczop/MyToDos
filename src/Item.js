@@ -9,6 +9,7 @@ function Item(props) {
   const [newValue, setNewValue] = useState(description);
 
   const handleTrashButton = () => {
+    toast.info(" ☠️ Removed");
     removeTodo(id);
   };
 
@@ -24,7 +25,13 @@ function Item(props) {
   };
 
   const hansleCheckButton = () => {
-    editTodo(id, newValue);
+    toast.info("Updated");
+    const newToDo = {
+      id: id,
+      description: newValue,
+      check: false,
+    };
+    editTodo(newToDo);
   };
 
   const handleChange = (e) => {
@@ -76,7 +83,14 @@ function Item(props) {
                   color="#007bff"
                 />
               ) : (
-                <X onClick={setReadOnlyValue} className="x" color="#007bff" />
+                <X
+                  onClick={() => {
+                    setReadOnlyValue();
+                    setNewValue(description)
+                  }}
+                  className="x"
+                  color="#007bff"
+                />
               )}
             </button>
           </h5>

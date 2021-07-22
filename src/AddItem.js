@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 
 function AddItem(props) {
-  const { setPlusButton, addTodo } = props;
+  const { setPlusButton, addTodo, todo } = props;
   const [newValueDescription, setNewValueDescription] = useState("");
 
   const handleAdd = () => {
     if (newValueDescription) {
-      addTodo(newValueDescription);
+      const newToDo={
+        id: todo.length + 1,
+        description: newValueDescription,
+        check: false
+      }
+      addTodo(newToDo);
       toast.success(" 🦄 Task added!");
     } else {
       toast.error(" ✍️ Empty description");

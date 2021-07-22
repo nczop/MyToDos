@@ -1,0 +1,29 @@
+{
+  "todo": [
+    {
+      "id": 1,
+      "description": "nauczyc sie reacta",
+      "check": false
+    },
+    {
+      "id": 2,
+      "description": "skończyć upskilla",
+      "check": false
+    },
+    {
+      "id": 3,
+      "description": "umyc okna",
+      "check": false
+    },
+    {
+      "id": 4,
+      "description": "zjesc ciasto",
+      "check": false
+    },
+    {
+      "id": 5,
+      "description": "wypić aperolka",
+      "check": false
+    }
+  ]
+}
