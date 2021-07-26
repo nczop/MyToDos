@@ -8,7 +8,6 @@ function AddItem(props) {
   const handleAdd = () => {
     if (newValueDescription) {
       const newToDo={
-        id: todo.length + 1,
         description: newValueDescription,
         check: false
       }
